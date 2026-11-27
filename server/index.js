@@ -1,14 +1,44 @@
 import "dotenv/config";
 import express from "express";
+import db from "./db.js";
+import doadores from "./routes/doadores.js";
+import itens from "./routes/itens.js";
+import doacoes from "./routes/doacoes.js";
 
 const app = express();
+
 app.use(express.json());
 
-app.get("/api/health", (req, res) => {
-  res.json({
-    status: "ok",
-    app: "GestaoSolidaria",
-    hora: new Date().toISOString(),
+// Verificar saúde da API e do banco
+app.get("/api/health", async (req, res) => {
+  try {
+    await db.execute("SELECT 1");
+
+    res.json({
+      status: "ok",
+      app: "GestaoSolidaria",
+      banco: "ok",
+      hora: new Date().toISOString(),
+    });
+  } catch {
+    res.status(500).json({
+      status: "ok",
+      banco: "erro",
+    });
+  }
+});
+
+// Rotas do sistema
+app.use("/api/doadores", doadores);
+app.use("/api/itens", itens);
+app.use("/api/doacoes", doacoes);
+
+// Tratamento de erros
+app.use((err, req, res, _next) => {
+  console.error(err);
+
+  res.status(500).json({
+    erro: "Erro interno do servidor",
   });
 });
 

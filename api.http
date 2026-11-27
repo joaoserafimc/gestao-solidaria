@@ -1,0 +1,60 @@
+@baseUrl = http://localhost:3000/api
+
+### Verificar a API
+GET {{baseUrl}}/health
+
+### Listar doadores
+GET {{baseUrl}}/doadores
+
+### Buscar doador pelo ID
+GET {{baseUrl}}/doadores/1
+
+### Cadastrar doador de teste
+# @name cadastro
+POST {{baseUrl}}/doadores
+Content-Type: application/json
+
+{
+  "nome": "Doador de Teste",
+  "email": "teste@exemplo.com",
+  "telefone": "14999990000"
+}
+
+### Editar doador de teste
+PUT {{baseUrl}}/doadores/{{cadastro.response.body.id_doador}}
+Content-Type: application/json
+
+{
+  "nome": "Doador de Teste Editado",
+  "email": "teste@exemplo.com",
+  "telefone": "14999991111"
+}
+
+### Excluir doador de teste
+DELETE {{baseUrl}}/doadores/{{cadastro.response.body.id_doador}}
+
+### Listar itens
+GET {{baseUrl}}/itens
+
+### Listar doações
+GET {{baseUrl}}/doacoes
+
+### Registrar doação
+POST {{baseUrl}}/doacoes
+Content-Type: application/json
+
+{
+  "id_doador": 1,
+  "data_doacao": "2026-11-26",
+  "observacao": "Doacao de teste",
+  "itens": [
+    {
+      "id_item": 1,
+      "quantidade": 5
+    },
+    {
+      "id_item": 2,
+      "quantidade": 10
+    }
+  ]
+}
