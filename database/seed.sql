@@ -5,6 +5,16 @@
 SET NAMES utf8mb4;
 
 USE gestao_solidaria;
+-- USUARIO DE DEMONSTRACAO
+-- Email: voluntario@exemplo.com
+-- Senha: gestao123
+
+INSERT INTO usuario (nome, email, senha_hash)
+VALUES (
+    'Voluntario Demo',
+    'voluntario@exemplo.com',
+    '$2b$10$8Qij9N6VWC50fMWRnpRE0eMqd4eTyTjhrwBzIuEhM7Kmg8eWEITYG'
+);
 
 -- CATEGORIAS
 

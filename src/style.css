@@ -311,3 +311,79 @@ button:disabled {
     padding: 16px;
   }
 }
+
+/* TELA DE LOGIN */
+
+.login {
+  max-width: 420px;
+  margin: 50px auto;
+}
+
+.login-marca {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-marca h1 {
+  font-size: 36px;
+  color: var(--verde-escuro);
+}
+
+.login-marca p {
+  color: #52645b;
+  margin: 8px 0;
+}
+
+.login .cartao {
+  padding: 30px;
+}
+
+.login h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.login button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+}
+
+/* USUARIO AUTENTICADO */
+
+.usuario-area {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+#nome-usuario {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#sair {
+  background: transparent;
+  color: white;
+  border-color: white;
+}
+
+#sair:hover {
+  background: white;
+  color: var(--verde-escuro);
+}
+
+@media (max-width: 600px) {
+  .login {
+    margin: 25px auto;
+  }
+
+  .login-marca h1 {
+    font-size: 28px;
+  }
+
+  .login .cartao {
+    padding: 20px;
+  }
+}

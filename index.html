@@ -7,7 +7,7 @@
   </head>
 
   <body>
-    <header class="topo">
+    <header class="topo" id="topo" hidden>
       <a class="marca" href="#/doadores"> GestãoSolidária </a>
 
       <nav aria-label="Principal">
@@ -15,6 +15,11 @@
         <a href="#/doacoes/nova">Registrar doação</a>
         <a href="#/doacoes">Doações</a>
       </nav>
+
+      <div class="usuario-area">
+        <span id="nome-usuario"></span>
+        <button id="sair" class="secundario">Sair</button>
+      </div>
     </header>
 
     <main id="app"></main>

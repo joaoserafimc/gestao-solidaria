@@ -1,60 +1,69 @@
 @baseUrl = http://localhost:3000/api
 
-### Verificar a API
+### 1 - Verificar a API
 GET {{baseUrl}}/health
 
-### Listar doadores
-GET {{baseUrl}}/doadores
-
-### Buscar doador pelo ID
-GET {{baseUrl}}/doadores/1
-
-### Cadastrar doador de teste
-# @name cadastro
+### 2 - Cadastrar doador sem token
 POST {{baseUrl}}/doadores
 Content-Type: application/json
 
 {
-  "nome": "Doador de Teste",
-  "email": "teste@exemplo.com",
-  "telefone": "14999990000"
+  "nome": "Teste sem token"
 }
 
-### Editar doador de teste
-PUT {{baseUrl}}/doadores/{{cadastro.response.body.id_doador}}
+### 3 - Login com senha incorreta
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "nome": "Doador de Teste Editado",
-  "email": "teste@exemplo.com",
-  "telefone": "14999991111"
+  "email": "voluntario@exemplo.com",
+  "senha": "errada"
 }
 
-### Excluir doador de teste
-DELETE {{baseUrl}}/doadores/{{cadastro.response.body.id_doador}}
-
-### Listar itens
-GET {{baseUrl}}/itens
-
-### Listar doações
-GET {{baseUrl}}/doacoes
-
-### Registrar doação
-POST {{baseUrl}}/doacoes
+### 4 - Login com email inexistente
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "id_doador": 1,
-  "data_doacao": "2026-11-26",
-  "observacao": "Doacao de teste",
-  "itens": [
-    {
-      "id_item": 1,
-      "quantidade": 5
-    },
-    {
-      "id_item": 2,
-      "quantidade": 10
-    }
-  ]
+  "email": "inexistente@exemplo.com",
+  "senha": "gestao123"
 }
+
+### 5 - Login sem senha
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "voluntario@exemplo.com"
+}
+
+### 6 - Login correto
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "voluntario@exemplo.com",
+  "senha": "gestao123"
+}
+
+###
+@token = {{login.response.body.token}}
+
+### 7 - Listar doadores com token
+GET {{baseUrl}}/doadores
+Authorization: Bearer {{token}}
+
+### 8 - Cadastrar doador com token
+POST {{baseUrl}}/doadores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Doador Teste JWT",
+  "email": "testejwt@exemplo.com"
+}
+
+### 9 - Testar token invalido
+GET {{baseUrl}}/doadores
+Authorization: Bearer {{token}}x

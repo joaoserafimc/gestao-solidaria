@@ -1,13 +1,37 @@
+const CHAVE_TOKEN = "gestaosolidaria_token";
+const CHAVE_NOME = "gestaosolidaria_usuario";
+
+export function lerToken() {
+  return localStorage.getItem(CHAVE_TOKEN);
+}
+
+export function lerNomeUsuario() {
+  return localStorage.getItem(CHAVE_NOME);
+}
+
+export function sair() {
+  localStorage.removeItem(CHAVE_TOKEN);
+  localStorage.removeItem(CHAVE_NOME);
+}
+
 async function requisicao(caminho, opcoes = {}) {
+  const headers = {
+    "Content-Type": "application/json",
+    ...opcoes.headers,
+  };
+
+  const token = lerToken();
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
   let resposta;
 
   try {
     resposta = await fetch(`/api${caminho}`, {
       ...opcoes,
-      headers: {
-        "Content-Type": "application/json",
-        ...opcoes.headers,
-      },
+      headers,
     });
   } catch {
     throw new Error("Sem conexão com o servidor.");
@@ -24,6 +48,20 @@ async function requisicao(caminho, opcoes = {}) {
   }
 
   return dados;
+}
+
+// AUTENTICACAO
+
+export async function entrar(email, senha) {
+  const dados = await requisicao("/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ email, senha }),
+  });
+
+  localStorage.setItem(CHAVE_TOKEN, dados.token);
+  localStorage.setItem(CHAVE_NOME, dados.usuario.nome);
+
+  return dados.usuario;
 }
 
 // DOADORES

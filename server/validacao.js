@@ -63,3 +63,17 @@ export function validarDoacao(dados) {
 
   return null;
 }
+
+export function validarLogin(dados) {
+  if (
+    !dados ||
+    typeof dados.email !== "string" ||
+    typeof dados.senha !== "string" ||
+    !dados.email.trim() ||
+    !dados.senha
+  ) {
+    return "Informe e-mail e senha";
+  }
+
+  return null;
+}
